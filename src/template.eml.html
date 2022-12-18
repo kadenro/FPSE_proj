@@ -1,0 +1,36 @@
+let display_initial_playlist track_list =
+<html>
+  <head>
+    <link rel="stylesheet" href="frontend/styles.css" />
+  </head>
+  <body>
+    <div>
+      <div class="container">
+        <h4 class="header">Current Playlist</h4>
+      </div>
+      <% track_list |> List.iter begin fun (track : Lib.Spotifyapi.song) -> %>
+      <div class="container" id="<%s track.id%>">
+        <iframe
+          style="border-radius: 12px"
+          width="90%"
+          height="152"
+          title="Spotify Embed: <%s track.name%>"
+          frameborder="0"
+          allowfullscreen
+          src="<%s track.oembed_src %>"
+        ></iframe>
+        <button class="button" onclick="removeItem('<%s track.id %>')">
+          X
+        </button>
+      </div>
+      <% end; %>
+      <div class="container">
+        <button class="button" onclick="addItem()">Add New Song</button>
+        <button class="button" onclick="createPlaylist()">
+          Create this playlist
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="frontend/modifylist.js"></script>
+</html>

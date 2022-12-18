@@ -1,0 +1,28 @@
+(library
+  (name lib)
+  (modules spotifyapi authentication)
+  (libraries 
+    cohttp-lwt-unix
+    lwt
+    core
+    dream
+    yojson 
+  )
+  (preprocess (pps lwt_ppx bisect_ppx)))
+
+(executable
+  (name main)
+  (modules main template)
+  (libraries
+    core
+    dream
+    lib
+  )
+  (preprocess (pps lwt_ppx bisect_ppx))
+)
+
+(rule
+ (targets template.ml)
+ (deps template.eml.html)
+ (action (run dream_eml %{deps} --workspace %{workspace_root})))
+

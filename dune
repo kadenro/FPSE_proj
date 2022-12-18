@@ -1,0 +1,17 @@
+(rule
+  (target project.zip)
+  (deps 
+    src/authentication.ml
+    src/spotifyapi.ml
+    src/main.ml
+    src/template.eml.html
+    frontend/modifylist.js
+    src/dune
+    test/tests.ml
+    test/dune
+    dune
+    dune-project
+    Readme.md
+  )
+  (action
+    (run zip -R project.zip %{deps})))

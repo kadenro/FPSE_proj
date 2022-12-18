@@ -1,0 +1,10 @@
+(test
+  (name tests)
+  (libraries
+    core
+    ounit2
+    lib
+    cohttp-lwt-unix
+    lwt
+    )
+    (preprocess (pps ppx_jane)))
