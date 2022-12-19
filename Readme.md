@@ -10,6 +10,6 @@ Description:
 Usage:
 
 - Run opam install . in the project root directory to install the required dependencies
-- Run dune build to build the project
-- Run dune test to test the project
+- Run dune build to build the project and dune test to test the project
 - To run the executable, use the command "dune exec -- src/main.exe"
+- IMPORTANT: in order to sucessfully authenticate and use the app, you need to send me the email address of the spotify account you want to use so I can grant you access. Without this step, you will be denied access and the app will not work properly. Email me at krosen23@jh.edu
