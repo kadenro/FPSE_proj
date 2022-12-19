@@ -22,12 +22,12 @@ let () =
           (* Generates access token and stores this as global state which will be used for calls to spotify api *)
           let%lwt access_token = Lib.Authentication.generate_access_token access_code in
           !current_state.access_token <- access_token;
+          let%lwt song_list = Lib.Spotifyapi.generate_random_playlist @@ get_access_token () in 
+          !current_state.playlist <- song_list;
           Dream.redirect req "/playlist/" ~code:301
         | None -> Dream.empty `Bad_Request
       ); 
     Dream.get "/playlist/" (fun _ -> 
-        let%lwt song_list = Lib.Spotifyapi.generate_random_playlist @@ get_access_token () in 
-        !current_state.playlist <- song_list;
         Dream.html @@ Template.display_initial_playlist (get_playlist())
       );
     Dream.delete "/playlist/:id" (fun req -> 
