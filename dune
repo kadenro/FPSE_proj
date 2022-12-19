@@ -2,16 +2,20 @@
   (target project.zip)
   (deps 
     src/authentication.ml
+    src/authentication.mli
     src/spotifyapi.ml
+    src/spotifyapi.mli
     src/main.ml
     src/template.eml.html
     frontend/modifylist.js
+    frontend/styles.css
     src/dune
     test/tests.ml
     test/dune
     dune
     dune-project
     Readme.md
+    random_spotify_playlist.opam
   )
   (action
     (run zip -R project.zip %{deps})))

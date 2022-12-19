@@ -83,10 +83,12 @@ let add_songs_to_playlist_request (access_token : string) (playlist_id : string 
     Header.add base "Authorization" ("Bearer " ^ access_token) in 
   generic_request base_uri headers `POST (Cohttp_lwt.Body.empty)
 
-let get_track_list_from_response (response : string) : Yojson.Safe.t list =
+let get_track_list_from_response (response : string) (is_query_response: bool): Yojson.Safe.t list =
   Yojson.Safe.from_string response |>
   Yojson.Safe.Util.member "tracks" |> 
-  Yojson.Safe.Util.member "items" |>
+  (* if the response is from a track query, we need to look in items field to get the list properly.
+     if the response is from a recommendation query, this isn't required *)
+  (fun x -> if is_query_response then x |> Yojson.Safe.Util.member "items" else x) |> 
   Yojson.Safe.Util.to_list
 
 let get_field (field_name : string) (item : Yojson.Safe.t) : string =
@@ -101,17 +103,12 @@ let json_item_to_song (item : Yojson.Safe.t) : song =
 
 let generate_random_song (access_token : string) : song Lwt.t = 
   let%lwt response = song_request access_token in
-  let random_track = get_track_list_from_response response |> get_random_element |> json_item_to_song in
+  let random_track =  get_track_list_from_response response true |> get_random_element |> json_item_to_song in
   return @@ random_track
 
 let generate_random_playlist (access_token : string) : song list Lwt.t = 
   Lwt.all @@
   List.init playlist_size ~f: (fun _ ->  generate_random_song access_token) 
-
-let get_track_list_from_recommendation_response (response : string) : Yojson.Safe.t list =
-  Yojson.Safe.from_string response |>
-  Yojson.Safe.Util.member "tracks" |> 
-  Yojson.Safe.Util.to_list
 
 let generate_song_from_curr_playlist (access_token : string) (playlist : song list) : song Lwt.t = 
   (* If no songs currently in users playlist generate a truly random song *)
@@ -119,7 +116,7 @@ let generate_song_from_curr_playlist (access_token : string) (playlist : song li
   (* Otherwise generate a recommended song from the current playlist *)
   else 
     let%lwt response = recommendation_request access_token playlist in  
-    let track = get_track_list_from_recommendation_response response |> List.hd_exn |> json_item_to_song in
+    let track = get_track_list_from_response response false|> List.hd_exn |> json_item_to_song in
     return @@ track
 
 let get_user_id (access_token : string) : string Lwt.t = 

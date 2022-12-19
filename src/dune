@@ -8,7 +8,7 @@
     dream
     yojson 
   )
-  (preprocess (pps lwt_ppx bisect_ppx)))
+  (preprocess (pps lwt_ppx bisect_ppx ppx_jane)))
 
 (executable
   (name main)
@@ -18,7 +18,7 @@
     dream
     lib
   )
-  (preprocess (pps lwt_ppx bisect_ppx))
+  (preprocess (pps lwt_ppx bisect_ppx ppx_jane))
 )
 
 (rule

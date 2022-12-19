@@ -10,8 +10,10 @@
  (depends
   (ounit2 (>= 2.2.6))
   (core (>= 0.15.0)) ; `opam list core` will display which version of core you have
-  (cohttp-lwt-unix (>= 5.0.0))
-  (lwt (>= 5.6.1))
-  (dream (>= 1.0.0~alpha4))
-  (yojson (>= 2.0.2))     
+  (cohttp-lwt-unix (= 5.0.0))
+  (lwt (= 5.6.1))
+  (lwt_ppx (= 2.1.0))
+  (ppx_jane (= v0.15.0))
+  (dream (= 1.0.0~alpha4))
+  (yojson (= 2.0.2))     
 ))

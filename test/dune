@@ -7,4 +7,4 @@
     cohttp-lwt-unix
     lwt
     )
-    (preprocess (pps ppx_jane)))
+)

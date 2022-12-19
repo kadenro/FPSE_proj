@@ -34,4 +34,6 @@ val add_songs_to_playlist : string -> string -> song list -> unit Lwt.t
 
 val generate_random_letter : unit -> string 
 
+val get_track_list_from_response : string -> bool -> Yojson.Safe.t list
+
 val json_item_to_song : Yojson.Safe.t -> song
