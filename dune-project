@@ -4,6 +4,7 @@
 (authors "Kaden Rosenblatt")
 (maintainers "krosen23@jh.edu")
 (package
+ (allow_empty)
  (name random_spotify_playlist) ; put in your own project name here
  (synopsis "Generation of random spotify playlists")
  (description "An executable which generates 10 random songs from Spotify, allows the user to remove and add new songs, and export the final playlist to Spotify")
